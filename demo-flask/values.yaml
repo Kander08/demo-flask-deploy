@@ -1,0 +1,32 @@
+namespace:
+  create: true
+  name: demo-app
+
+replicaCount: 2
+
+image:
+  repository: kandemir08/test-registry
+  tag: "1.0.1"
+  pullPolicy: Always
+
+app:
+  name: demo-flask
+  version: "1.0.0"
+
+service:
+  name: demo-flask-service
+  type: NodePort
+  port: 80
+  targetPort: 5000
+
+containerPort: 5000
+
+probes:
+  readiness:
+    path: /health
+    initialDelaySeconds: 3
+    periodSeconds: 5
+  liveness:
+    path: /health
+    initialDelaySeconds: 10
+    periodSeconds: 10
